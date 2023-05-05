@@ -222,6 +222,7 @@ class QLearning_Agent(BasicAgent):
                 if (done or truncated):
                     self.episodes_reward.append(tot_rew)
 
+# ************************************ Двойное Q-обучение *****************************************
 
 class DoubleQLearning_Agent(BasicAgent):
     '''
@@ -294,14 +295,6 @@ class DoubleQLearning_Agent(BasicAgent):
                 
                 # Выполняем шаг в среде
                 next_state, rew, done, truncated, _ = self.env.step(action)
-
-                # Правило обновления Q для SARSA (для сравнения)
-                # self.Q[state][action] = self.Q[state][action] + self.lr * \
-                #     (rew + self.gamma * self.Q[next_state][next_action] - self.Q[state][action])
-
-                # Правило обновления для Q-обучения
-                self.Q[state][action] = self.Q[state][action] + self.lr * \
-                    (rew + self.gamma * np.max(self.Q[next_state]) - self.Q[state][action])
 
                 if np.random.rand() < 0.5:
                     # Обновление первой таблицы
